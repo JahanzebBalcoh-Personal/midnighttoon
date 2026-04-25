@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import AdminDashboardContent from "@/components/admin/AdminDashboardContent";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboard() {
     const totalComics = await prisma.comic.count();
     const totalUsers = await prisma.user.count();

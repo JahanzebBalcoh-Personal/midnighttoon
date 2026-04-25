@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default async function Browse() {
     const comics = await prisma.comic.findMany({ orderBy: { totalViews: "desc" } });
     const genres = ["Romance", "Drama", "Fantasy Romance", "School Life", "Office Romance", "Forbidden Love", "Supernatural Romance", "Thriller"];

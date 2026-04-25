@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
     const featured = await prisma.comic.findFirst({ where: { isFeatured: true }, orderBy: { totalViews: "desc" } });
     const trending = await prisma.comic.findMany({ orderBy: { totalViews: "desc" }, take: 10 });
