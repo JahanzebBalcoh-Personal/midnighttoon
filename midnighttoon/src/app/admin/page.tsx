@@ -1,31 +1,42 @@
-export default function AdminDashboard() {
+import prisma from "@/lib/prisma";
+
+export default async function AdminDashboard() {
+    const totalComics = await prisma.comic.count();
+    const totalUsers = await prisma.user.count();
+    const totalArtists = await prisma.artist.count();
+    const recentComics = await prisma.comic.findMany({
+        take: 5,
+        orderBy: { createdAt: "desc" },
+        include: { _count: { select: { episodes: true } } }
+    });
+
     return (
         <div className="max-w-7xl mx-auto px-4 py-8 pt-24 font-ui min-h-screen">
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-3xl font-heading font-bold text-white"><i className="fa-solid fa-lock text-accent mr-3"></i>Admin Dashboard</h1>
-                <div className="bg-card px-4 py-2 rounded-lg border border-white/10 text-sm text-text-secondary">Welcome, Admin User</div>
+                <div className="bg-card px-4 py-2 rounded-lg border border-white/10 text-sm text-text-secondary">System Administrator</div>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 <div className="bg-card p-6 rounded-2xl border border-white/5 shadow-sm">
                     <p className="text-text-secondary text-sm mb-1">Total Users</p>
-                    <p className="text-3xl font-bold text-white">45,231</p>
-                    <p className="text-success text-xs mt-2"><i className="fa-solid fa-arrow-up mr-1"></i> +12% this week</p>
+                    <p className="text-3xl font-bold text-white">{totalUsers}</p>
+                    <p className="text-success text-xs mt-2"><i className="fa-solid fa-arrow-up mr-1"></i> New Project</p>
                 </div>
                 <div className="bg-card p-6 rounded-2xl border border-white/5 shadow-sm">
-                    <p className="text-text-secondary text-sm mb-1">Active Subscribers</p>
-                    <p className="text-3xl font-bold text-secondary">12,845</p>
-                    <p className="text-success text-xs mt-2"><i className="fa-solid fa-arrow-up mr-1"></i> +5% this week</p>
+                    <p className="text-text-secondary text-sm mb-1">Total Comics</p>
+                    <p className="text-3xl font-bold text-secondary">{totalComics}</p>
+                    <p className="text-success text-xs mt-2"><i className="fa-solid fa-check mr-1"></i> Live</p>
                 </div>
                 <div className="bg-card p-6 rounded-2xl border border-white/5 shadow-sm">
-                    <p className="text-text-secondary text-sm mb-1">Monthly Revenue</p>
-                    <p className="text-3xl font-bold text-success">$84,520</p>
-                    <p className="text-success text-xs mt-2"><i className="fa-solid fa-arrow-up mr-1"></i> +18% this week</p>
+                    <p className="text-text-secondary text-sm mb-1">Active Artists</p>
+                    <p className="text-3xl font-bold text-success">{totalArtists}</p>
+                    <p className="text-success text-xs mt-2"><i className="fa-solid fa-user-pen mr-1"></i> Verified</p>
                 </div>
                 <div className="bg-card p-6 rounded-2xl border border-white/5 shadow-sm">
-                    <p className="text-text-secondary text-sm mb-1">Total Coins Sold</p>
-                    <p className="text-3xl font-bold text-gold">1.2M</p>
-                    <p className="text-error text-xs mt-2"><i className="fa-solid fa-arrow-down mr-1"></i> -2% this week</p>
+                    <p className="text-text-secondary text-sm mb-1">Project Status</p>
+                    <p className="text-3xl font-bold text-gold">Ready</p>
+                    <p className="text-success text-xs mt-2"><i className="fa-solid fa-signal mr-1"></i> Database Sync</p>
                 </div>
             </div>
 
@@ -55,22 +66,25 @@ export default function AdminDashboard() {
                                         <th className="pb-3 font-medium">Title</th>
                                         <th className="pb-3 font-medium">Status</th>
                                         <th className="pb-3 font-medium">Episodes</th>
-                                        <th className="pb-3 font-medium">Actions</th>
+                                        <th className="pb-3 font-medium">Views</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="border-b border-white/5 hover:bg-white/5">
-                                        <td className="py-3 flex items-center gap-3">
-                                            <img src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" className="w-10 h-10 object-cover rounded" />
-                                            <span className="text-white truncate max-w-[150px]">Midnight Contract</span>
-                                        </td>
-                                        <td className="py-3"><span className="bg-success/20 text-success px-2 py-1 rounded text-xs">Ongoing</span></td>
-                                        <td className="py-3">5</td>
-                                        <td className="py-3">
-                                            <button className="text-text-secondary hover:text-accent mr-2"><i className="fa-solid fa-pen"></i></button>
-                                            <button className="text-text-secondary hover:text-error"><i className="fa-solid fa-trash"></i></button>
-                                        </td>
-                                    </tr>
+                                    {recentComics.map(comic => (
+                                        <tr key={comic.id} className="border-b border-white/5 hover:bg-white/5">
+                                            <td className="py-3 flex items-center gap-3">
+                                                <img src={comic.coverImage} className="w-10 h-10 object-cover rounded" />
+                                                <span className="text-white truncate max-w-[150px]">{comic.title}</span>
+                                            </td>
+                                            <td className="py-3">
+                                                <span className={`px-2 py-1 rounded text-xs ${comic.status === 'Ongoing' ? 'bg-success/20 text-success' : 'bg-accent/20 text-accent'}`}>
+                                                    {comic.status}
+                                                </span>
+                                            </td>
+                                            <td className="py-3">{comic._count.episodes}</td>
+                                            <td className="py-3">{(comic.totalViews / 1000).toFixed(0)}K</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
