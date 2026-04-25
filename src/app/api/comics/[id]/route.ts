@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 // GET /api/comics/[id] - Get single comic with episodes
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
     try {
+        const { id } = await params;
         const comic = await prisma.comic.findUnique({
-            where: { id: params.id },
+            where: { id: id },
             include: {
                 episodes: { orderBy: { episodeNumber: "asc" } },
                 _count: { select: { bookmarks: true } },
