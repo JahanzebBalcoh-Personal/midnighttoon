@@ -19,7 +19,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
 
         // Increment view count
         await prisma.comic.update({
-            where: { id: params.id },
+            where: { id: id },
             data: { totalViews: { increment: 1 } },
         });
 
