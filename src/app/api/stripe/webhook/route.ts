@@ -3,13 +3,21 @@ import Stripe from "stripe";
 import { headers } from "next/headers";
 import prisma from "@/lib/prisma";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-12-18.acacia" as any,
-});
+const getStripe = () => {
+  if (!process.env.STRIPE_SECRET_KEY) return null;
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2024-12-18.acacia" as any,
+  });
+};
 
 export async function POST(request: Request) {
   const body = await request.text();
   const signature = (await headers()).get("Stripe-Signature") as string;
+
+  const stripe = getStripe();
+  if (!stripe || !process.env.STRIPE_WEBHOOK_SECRET) {
+    return NextResponse.json({ error: "Stripe not configured" }, { status: 500 });
+  }
 
   let event: Stripe.Event;
 
@@ -17,7 +25,7 @@ export async function POST(request: Request) {
     event = stripe.webhooks.constructEvent(
       body,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
+      process.env.STRIPE_WEBHOOK_SECRET
     );
   } catch (error: any) {
     return NextResponse.json({ error: `Webhook Error: ${error.message}` }, { status: 400 });

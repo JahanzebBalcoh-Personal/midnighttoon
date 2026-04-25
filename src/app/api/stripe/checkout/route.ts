@@ -3,9 +3,12 @@ import Stripe from "stripe";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-12-18.acacia" as any,
-});
+const getStripe = () => {
+  if (!process.env.STRIPE_SECRET_KEY) return null;
+  return new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: "2024-12-18.acacia" as any,
+  });
+};
 
 export async function POST(request: Request) {
   try {
@@ -48,6 +51,11 @@ export async function POST(request: Request) {
           quantity: 1,
         },
       ];
+    }
+
+    const stripe = getStripe();
+    if (!stripe) {
+      return NextResponse.json({ error: "Stripe is not configured" }, { status: 500 });
     }
 
     const checkoutSession = await stripe.checkout.sessions.create({
