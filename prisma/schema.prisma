@@ -16,7 +16,7 @@ model User {
   email                String             @unique
   passwordHash         String
   avatar               String?
-  dateOfBirth          DateTime
+  dateOfBirth          DateTime?
   subscriptionPlan     String             @default("Free")
   subscriptionExpires  DateTime?
   coinsBalance         Int                @default(0)
