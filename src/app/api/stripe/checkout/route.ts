@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 
     const { planId, coinsAmount, type } = await request.json();
 
-    let line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+    let line_items: any[] = [];
 
     if (type === "coins") {
       line_items = [
