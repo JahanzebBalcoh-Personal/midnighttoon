@@ -18,7 +18,7 @@ export default async function Home() {
                     <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                         <div className="w-full md:w-1/2 space-y-4">
                             <div className="flex gap-2">
-                                {featured.genres.slice(0, 3).map(g => (
+                                {featured.genres.slice(0, 3).map((g: any) => (
                                     <span key={g} className="bg-secondary/20 text-accent border border-accent/30 text-xs px-2 py-1 rounded-full">{g}</span>
                                 ))}
                             </div>
@@ -40,7 +40,7 @@ export default async function Home() {
             {/* Genre Pills */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="flex flex-wrap justify-center gap-3 mb-8">
-                    {["Romance", "Drama", "Fantasy", "School Life", "Office", "Forbidden Love", "Supernatural", "Thriller"].map(g => (
+                    {["Romance", "Drama", "Fantasy", "School Life", "Office", "Forbidden Love", "Supernatural", "Thriller"].map((g: string) => (
                         <button key={g} className="bg-card border border-white/10 text-text-secondary hover:text-white hover:border-accent hover:bg-accent/10 px-4 py-2 rounded-full text-sm font-ui transition">{g}</button>
                     ))}
                 </div>
@@ -53,7 +53,7 @@ export default async function Home() {
                     <Link href="/browse" className="text-accent text-sm font-ui hover:text-white transition">See All <i className="fa-solid fa-chevron-right text-xs"></i></Link>
                 </div>
                 <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-6 snap-x">
-                    {trending.map(comic => (
+                    {trending.map((comic: any) => (
                         <Link href={`/comic/${comic.id}`} key={comic.id} className="comic-card bg-card rounded-xl overflow-hidden cursor-pointer relative group flex-shrink-0 w-40 sm:w-48 md:w-56 snap-start">
                             <div className="relative aspect-[2/3] overflow-hidden">
                                 <img src={comic.coverImage} alt={comic.title} className="comic-cover w-full h-full object-cover transition duration-300" />
@@ -81,7 +81,7 @@ export default async function Home() {
                     <div className="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <h2 className="text-2xl font-heading font-bold text-white border-l-4 border-accent pl-3 mb-4">Premium Exclusives <i className="fa-solid fa-gem text-accent text-lg ml-2"></i></h2>
                         <div className="flex gap-4 overflow-x-auto hide-scrollbar pb-6 snap-x">
-                            {exclusives.map(comic => (
+                            {exclusives.map((comic: any) => (
                                 <Link href={`/comic/${comic.id}`} key={comic.id} className="comic-card bg-card rounded-xl overflow-hidden cursor-pointer relative group flex-shrink-0 w-40 sm:w-48 md:w-56 snap-start">
                                     <div className="relative aspect-[2/3] overflow-hidden">
                                         <img src={comic.coverImage} alt={comic.title} className="comic-cover w-full h-full object-cover transition duration-300" />

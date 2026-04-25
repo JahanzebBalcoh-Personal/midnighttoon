@@ -36,7 +36,7 @@ export default async function ComicDetail({ params }: { params: Promise<{ id: st
                 
                 <div className="flex-grow pt-4 md:pt-32">
                     <div className="flex flex-wrap gap-2 mb-3">
-                        {comic.genres.map(g => (
+                        {comic.genres.map((g: any) => (
                             <span key={g} className="bg-card text-text-secondary border border-white/10 text-xs px-2 py-1 rounded">{g}</span>
                         ))}
                         <span className="bg-error/20 text-error border border-error/30 text-xs font-bold px-2 py-1 rounded">{comic.ageRating}</span>
@@ -55,7 +55,7 @@ export default async function ComicDetail({ params }: { params: Promise<{ id: st
                     <div className="mt-8">
                         <h3 className="text-xl font-heading font-bold text-white mb-4">Episodes</h3>
                         <div className="bg-card/50 rounded-2xl border border-white/5 overflow-hidden">
-                            {comic.episodes.map(ep => (
+                            {comic.episodes.map((ep: any) => (
                                 <Link href={`/read/${comic.id}/${ep.id}`} key={ep.id} className="flex items-center gap-4 p-3 hover:bg-white/5 transition cursor-pointer border-b border-white/5">
                                     <div className="relative w-24 aspect-video bg-card rounded overflow-hidden flex-shrink-0">
                                         <img src={comic.coverImage} className="w-full h-full object-cover opacity-50" />

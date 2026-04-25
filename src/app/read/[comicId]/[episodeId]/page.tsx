@@ -54,7 +54,7 @@ export default async function Reader({ params }: { params: Promise<{ comicId: st
                     </div>
                 ) : (
                     <div className="flex flex-col">
-                        {episode.pagesUrls.map((img, idx) => (
+                        {episode.pagesUrls.map((img: string, idx: number) => (
                             <img key={idx} src={img} alt={`Page ${idx+1}`} className="w-full h-auto block" loading="lazy" />
                         ))}
                         

@@ -28,7 +28,7 @@ export default async function Browse() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
-                {comics.map(comic => (
+                {comics.map((comic: any) => (
                     <Link href={`/comic/${comic.id}`} key={comic.id} className="comic-card bg-card rounded-xl overflow-hidden cursor-pointer relative group w-full">
                         <div className="relative aspect-[2/3] overflow-hidden">
                             <img src={comic.coverImage} alt={comic.title} className="comic-cover w-full h-full object-cover transition duration-300" />
