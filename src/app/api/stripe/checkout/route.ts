@@ -57,7 +57,7 @@ export async function POST(request: Request) {
       success_url: `${process.env.NEXTAUTH_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.NEXTAUTH_URL}/subscribe`,
       metadata: {
-        userId: session!.user!.id,
+        userId: (session!.user as any).id,
         coinsAmount: coinsAmount?.toString() || "0",
         planId: planId || "",
         type,
