@@ -1,0 +1,144 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   String             @id @default(uuid())
+  username             String             @unique
+  email                String             @unique
+  passwordHash         String
+  avatar               String?
+  dateOfBirth          DateTime
+  subscriptionPlan     String             @default("Free")
+  subscriptionExpires  DateTime?
+  coinsBalance         Int                @default(0)
+  createdAt            DateTime           @default(now())
+
+  subscriptions        Subscription[]
+  coinTransactions     CoinTransaction[]
+  unlockedEpisodes     UnlockedEpisode[]
+  bookmarks            Bookmark[]
+  readingHistory       ReadingHistory[]
+  comments             Comment[]
+}
+
+model Comic {
+  id              String            @id @default(uuid())
+  title           String
+  authorId        String
+  coverImage      String
+  bannerImage     String?
+  synopsis        String            @db.Text
+  genres          String[]
+  tags            String[]
+  status          String            @default("Ongoing")
+  ageRating       String            @default("18+")
+  isFeatured      Boolean           @default(false)
+  isExclusive     Boolean           @default(false)
+  totalViews      Int               @default(0)
+  totalLikes      Int               @default(0)
+  createdAt       DateTime          @default(now())
+
+  episodes        Episode[]
+  bookmarks       Bookmark[]
+  readingHistory  ReadingHistory[]
+}
+
+model Episode {
+  id              String            @id @default(uuid())
+  comicId         String
+  comic           Comic             @relation(fields: [comicId], references: [id])
+  episodeNumber   Int
+  title           String
+  thumbnail       String?
+  isFree          Boolean           @default(false)
+  coinCost        Int               @default(0)
+  releaseDate     DateTime          @default(now())
+  views           Int               @default(0)
+  likes           Int               @default(0)
+  pagesUrls       String[]
+
+  unlockedBy      UnlockedEpisode[]
+  readingHistory  ReadingHistory[]
+  comments        Comment[]
+}
+
+model Subscription {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  planName        String
+  pricePaid       Float
+  startedAt       DateTime @default(now())
+  expiresAt       DateTime
+  paymentGateway  String
+  status          String   @default("Active")
+}
+
+model CoinTransaction {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  coinsAmount     Int
+  pricePaid       Float
+  type            String   // "Purchase", "Bonus"
+  createdAt       DateTime @default(now())
+}
+
+model UnlockedEpisode {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  episodeId       String
+  episode         Episode  @relation(fields: [episodeId], references: [id])
+  coinsSpent      Int
+  unlockedAt      DateTime @default(now())
+}
+
+model Bookmark {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  comicId         String
+  comic           Comic    @relation(fields: [comicId], references: [id])
+  createdAt       DateTime @default(now())
+}
+
+model ReadingHistory {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  comicId         String
+  comic           Comic    @relation(fields: [comicId], references: [id])
+  episodeId       String
+  episode         Episode  @relation(fields: [episodeId], references: [id])
+  lastReadAt      DateTime @default(now())
+}
+
+model Comment {
+  id              String   @id @default(uuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  episodeId       String
+  episode         Episode  @relation(fields: [episodeId], references: [id])
+  content         String   @db.Text
+  likes           Int      @default(0)
+  createdAt       DateTime @default(now())
+}
+
+model Artist {
+  id                  String   @id @default(uuid())
+  name                String
+  email               String   @unique
+  paymentModel        String   // "RevenueShare", "Fixed"
+  revenueSharePercent Int      @default(30)
+  totalEarned         Float    @default(0)
+}

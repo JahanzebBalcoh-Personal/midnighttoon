@@ -1,0 +1,105 @@
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0D0D0D;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1C1C2E;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6C0BA9;
+}
+
+/* Hide scrollbar for horizontal scroll areas but keep functionality */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Comic Card Hover Effects */
+.comic-card {
+    transition: all 0.3s ease;
+}
+
+.comic-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(108, 11, 169, 0.4);
+}
+
+.comic-card:hover .comic-cover {
+    filter: brightness(1.1);
+}
+
+/* Comic Reader Specific Styles */
+.webtoon-reader {
+    background: #000;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.webtoon-reader img {
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Lock Icon Overlay */
+.locked-episode-overlay {
+    background: rgba(13, 13, 13, 0.8);
+    backdrop-filter: blur(4px);
+}
+
+/* Gradient Text */
+.text-gradient {
+    background: linear-gradient(to right, #6C0BA9, #FF4D8D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Safe area for mobile PWA */
+.pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Parallax Background */
+.parallax-bg {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Shimmer Loading */
+.skeleton {
+    background: #1C1C2E;
+    background-image: linear-gradient(to right, #1C1C2E 0%, #2a2a40 20%, #1C1C2E 40%, #1C1C2E 100%);
+    background-repeat: no-repeat;
+    background-size: 800px 100%;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards; 
+    animation-iteration-count: infinite;
+    animation-name: shimmer;
+    animation-timing-function: linear;
+}
+
+/* Fade In Animation */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1A0533;
+  --color-secondary: #6C0BA9;
+  --color-accent: #FF4D8D;
+  --color-background: #0D0D0D;
+  --color-card: #1C1C2E;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #B0B0C8;
+  --color-gold: #FFD700;
+  --color-success: #00C896;
+  --color-error: #FF4444;
+
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-ui: 'Poppins', sans-serif;
+  --font-title: 'Cinzel', serif;
+
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+  --animate-shimmer: shimmer 2s linear infinite;
+
+  @keyframes glow {
+    0% { box-shadow: 0 0 5px #FF4D8D, 0 0 10px #FF4D8D; }
+    100% { box-shadow: 0 0 10px #FF4D8D, 0 0 20px #FF4D8D, 0 0 30px #FF4D8D; }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+  }
+}
+
+:root {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0D0D0D;
+}
+::-webkit-scrollbar-thumb {
+  background: #1C1C2E;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #6C0BA9;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.comic-card {
+  transition: all 0.3s ease;
+}
+.comic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(108, 11, 169, 0.4);
+}
+.comic-card:hover .comic-cover {
+  filter: brightness(1.1);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #6C0BA9, #FF4D8D);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
