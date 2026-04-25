@@ -50,9 +50,9 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ token, session }) {
+    async session({ token, session }: any) {
       if (token) {
-        session.user.id = token.id as string;
+        session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email;
       }
@@ -64,7 +64,7 @@ export const authOptions: NextAuthOptions = {
       });
 
       if (!dbUser) {
-        token.id = user!.id;
+        if (user) token.id = user.id;
         return token;
       }
 
