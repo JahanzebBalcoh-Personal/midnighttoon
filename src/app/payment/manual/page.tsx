@@ -40,7 +40,7 @@ export default function ManualPayment() {
     } catch (error) {
       alert("Something went wrong!");
     } finally {
-      setLoading(null);
+      setLoading(false);
     }
   };
 
