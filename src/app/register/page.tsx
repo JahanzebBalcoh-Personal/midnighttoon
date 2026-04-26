@@ -118,6 +118,7 @@ export default function RegisterPage() {
 
                 <div className="mt-6">
                     <button 
+                        type="button"
                         onClick={() => signIn("google", { callbackUrl: "/" })}
                         className="w-full flex items-center justify-center gap-3 bg-background border border-white/10 p-3.5 rounded-xl hover:bg-white/5 transition text-white text-sm font-medium"
                     >
