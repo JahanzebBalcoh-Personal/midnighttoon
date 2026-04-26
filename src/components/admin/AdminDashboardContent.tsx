@@ -38,7 +38,7 @@ export default function AdminDashboardContent({ stats, recentComics }: { stats: 
                         <h3 className="text-white font-bold mb-4 border-b border-white/10 pb-2">Quick Actions</h3>
                         <ul className="space-y-3">
                             <li><button onClick={() => setIsModalOpen(true)} className="w-full text-left bg-background hover:bg-white/5 border border-white/5 p-3 rounded-xl text-sm text-text-secondary transition"><i className="fa-solid fa-upload mr-3 text-accent"></i> Upload New Comic</button></li>
-                            <li><button className="w-full text-left bg-background hover:bg-white/5 border border-white/5 p-3 rounded-xl text-sm text-text-secondary transition"><i className="fa-solid fa-file-image mr-3 text-secondary"></i> Add Episode Pages</button></li>
+                            <li><button onClick={() => window.location.href='/admin/payments'} className="w-full text-left bg-background hover:bg-white/5 border border-white/5 p-3 rounded-xl text-sm text-text-secondary transition"><i className="fa-solid fa-money-bill-transfer mr-3 text-gold"></i> Manage Payments</button></li>
                             <li><button className="w-full text-left bg-background hover:bg-white/5 border border-white/5 p-3 rounded-xl text-sm text-text-secondary transition"><i className="fa-solid fa-users mr-3 text-success"></i> Manage Users</button></li>
                         </ul>
                     </div>

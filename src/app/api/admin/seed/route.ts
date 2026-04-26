@@ -35,6 +35,20 @@ export async function GET() {
         totalViews: 8900,
         totalLikes: 5200,
         authorId: "AI-Author-2"
+      },
+      {
+        title: "Secret Roommate",
+        synopsis: "When a struggling artist discovers her new roommate is actually a billionaire in hiding, their shared apartment becomes a playground for forbidden romance and late-night confessions.",
+        coverImage: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1887&auto=format&fit=crop",
+        bannerImage: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=2069&auto=format&fit=crop",
+        genres: ["Romance", "Slice of Life", "Drama"],
+        status: "New",
+        ageRating: "18+",
+        isFeatured: false,
+        isExclusive: true,
+        totalViews: 5400,
+        totalLikes: 3200,
+        authorId: "AI-Author-3"
       }
     ];
 
