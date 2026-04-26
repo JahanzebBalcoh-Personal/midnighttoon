@@ -28,6 +28,7 @@ model User {
   bookmarks            Bookmark[]
   readingHistory       ReadingHistory[]
   comments             Comment[]
+  paymentRequests      PaymentRequest[]
 }
 
 model Comic {
@@ -141,4 +142,17 @@ model Artist {
   paymentModel        String   // "RevenueShare", "Fixed"
   revenueSharePercent Int      @default(30)
   totalEarned         Float    @default(0)
+}
+
+model PaymentRequest {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  amount    Float
+  coins     Int
+  method    String   // Easypaisa, JazzCash, Bank
+  status    String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  proofUrl  String   // URL of the uploaded screenshot
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
