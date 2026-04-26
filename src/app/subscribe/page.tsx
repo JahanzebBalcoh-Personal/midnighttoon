@@ -9,19 +9,19 @@ export default function Subscribe() {
     const router = useRouter();
     const [loading, setLoading] = useState<string | null>(null);
 
-    const handlePurchase = async (type: "coins" | "subscription", planId?: string, coinsAmount?: number) => {
+    const handlePurchase = async (type: "coins" | "subscription", variantId: string, planId?: string, coinsAmount?: number) => {
         if (!session) {
             router.push("/login");
             return;
         }
 
-        setLoading(planId || coinsAmount?.toString() || "loading");
+        setLoading(planId || coinsAmount?.toString() || variantId);
 
         try {
-            const res = await fetch("/api/stripe/checkout", {
+            const res = await fetch("/api/lemonsqueezy/checkout", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ type, planId, coinsAmount }),
+                body: JSON.stringify({ type, variantId, planId, coinsAmount }),
             });
 
             const data = await res.json();
@@ -72,7 +72,7 @@ export default function Subscribe() {
                         <li><i className="fa-solid fa-check text-secondary mr-2"></i> Early release access</li>
                     </ul>
                     <button 
-                        onClick={() => handlePurchase("subscription", "Basic")}
+                        onClick={() => handlePurchase("subscription", "123456", "Basic")}
                         disabled={loading !== null}
                         className="w-full bg-secondary text-white font-bold py-3 rounded-xl hover:bg-opacity-90 transition shadow-lg flex justify-center items-center"
                     >
@@ -91,7 +91,7 @@ export default function Subscribe() {
                         <li className="text-white/90"><i className="fa-solid fa-check text-gold mr-2"></i> Exclusive Discord role</li>
                     </ul>
                     <button 
-                        onClick={() => handlePurchase("subscription", "Premium")}
+                        onClick={() => handlePurchase("subscription", "789012", "Premium")}
                         disabled={loading !== null}
                         className="w-full bg-gold text-black font-bold py-3 rounded-xl hover:bg-yellow-400 transition shadow-lg flex justify-center items-center"
                     >
@@ -108,10 +108,10 @@ export default function Subscribe() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
                 {[
-                    { amount: 50, price: 4.99, bonus: 0 },
-                    { amount: 120, price: 9.99, bonus: 20 },
-                    { amount: 250, price: 19.99, bonus: 50 },
-                    { amount: 700, price: 49.99, bonus: 150 },
+                    { amount: 50, price: 4.99, bonus: 0, variantId: "345678" },
+                    { amount: 120, price: 9.99, bonus: 20, variantId: "901234" },
+                    { amount: 250, price: 19.99, bonus: 50, variantId: "567890" },
+                    { amount: 700, price: 49.99, bonus: 150, variantId: "123450" },
                 ].map(pack => (
                     <div key={pack.amount} className="bg-card border border-white/5 p-6 rounded-2xl text-center hover:border-accent/30 transition group">
                         <div className="w-12 h-12 bg-gold/10 rounded-full flex items-center justify-center mx-auto mb-4 text-gold group-hover:scale-110 transition">
@@ -121,7 +121,7 @@ export default function Subscribe() {
                         {pack.bonus > 0 && <div className="text-[10px] text-success font-bold mb-4">+{pack.bonus} BONUS</div>}
                         <div className="text-lg text-text-secondary mb-6">${pack.price}</div>
                         <button 
-                            onClick={() => handlePurchase("coins", undefined, pack.amount)}
+                            onClick={() => handlePurchase("coins", pack.variantId, undefined, pack.amount)}
                             disabled={loading !== null}
                             className="w-full bg-background border border-white/10 text-white font-bold py-2 rounded-lg hover:border-accent hover:text-accent transition flex justify-center items-center"
                         >
