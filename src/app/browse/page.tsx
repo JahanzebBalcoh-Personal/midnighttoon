@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import SafeImage from "@/components/ui/SafeImage";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -99,7 +100,7 @@ export default async function Browse({ searchParams }: { searchParams: Promise<S
                     {comics.map((comic: any) => (
                         <Link href={`/comic/${comic.id}`} key={comic.id} className="comic-card bg-card rounded-2xl overflow-hidden cursor-pointer relative group w-full border border-white/5 hover:border-accent/30 transition shadow-lg">
                             <div className="relative aspect-[2/3] overflow-hidden">
-                                <img src={comic.coverImage} alt={comic.title} className="comic-cover w-full h-full object-cover transition duration-500 group-hover:scale-110" />
+                                <SafeImage src={comic.coverImage} alt={comic.title} className="comic-cover w-full h-full object-cover transition duration-500 group-hover:scale-110" />
                                 {comic.isExclusive && (
                                     <div className="absolute top-2 left-2 bg-gradient-to-r from-secondary to-accent text-white text-[10px] font-bold px-2 py-1 rounded-lg shadow-lg">
                                         <i className="fa-solid fa-gem mr-1"></i>EXCLUSIVE

@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import SafeImage from "@/components/ui/SafeImage";
 
 export default function LibraryPage() {
     const { data: session, status } = useSession();
@@ -52,7 +53,7 @@ export default function LibraryPage() {
                         <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-secondary to-accent p-1 shadow-[0_0_20px_rgba(255,77,141,0.3)]">
                             <div className="w-full h-full rounded-full bg-card flex items-center justify-center text-3xl font-bold text-white overflow-hidden">
                                 {session?.user?.image ? (
-                                    <img src={session.user.image} className="w-full h-full object-cover" />
+                                    <SafeImage src={session.user.image} className="w-full h-full object-cover" />
                                 ) : (
                                     session?.user?.name?.charAt(0).toUpperCase()
                                 )}
@@ -106,7 +107,7 @@ export default function LibraryPage() {
                             data.bookmarks.map((item: any) => (
                                 <Link href={`/comic/${item.comic.id}`} key={item.id} className="group">
                                     <div className="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 group-hover:border-accent/50 transition">
-                                        <img src={item.comic.coverImage} className="w-full h-full object-cover transition duration-500 group-hover:scale-110" />
+                                        <SafeImage src={item.comic.coverImage} className="w-full h-full object-cover transition duration-500 group-hover:scale-110" />
                                         <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded">
                                             {item.comic.status}
                                         </div>
@@ -128,7 +129,7 @@ export default function LibraryPage() {
                             data.history.map((item: any) => (
                                 <Link href={`/read/${item.episode.id}`} key={item.id} className="group">
                                     <div className="relative aspect-[2/3] rounded-2xl overflow-hidden mb-3 border border-white/5 group-hover:border-accent/50 transition">
-                                        <img src={item.comic.coverImage} className="w-full h-full object-cover opacity-60 transition duration-500 group-hover:scale-110" />
+                                        <SafeImage src={item.comic.coverImage} className="w-full h-full object-cover opacity-60 transition duration-500 group-hover:scale-110" />
                                         <div className="absolute inset-0 flex items-center justify-center">
                                             <div className="bg-accent/20 backdrop-blur-sm border border-accent/30 text-white text-[10px] font-bold px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition">
                                                 CONTINUE

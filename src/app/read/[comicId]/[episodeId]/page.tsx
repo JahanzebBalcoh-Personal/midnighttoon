@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import SafeImage from "@/components/ui/SafeImage";
 
 export const dynamic = "force-dynamic";
 
@@ -80,7 +81,7 @@ export default async function Reader({ params }: { params: Promise<{ comicId: st
                 ) : (
                     <div className="flex flex-col">
                         {episode.pagesUrls.map((img: string, idx: number) => (
-                            <img key={idx} src={img} alt={`Page ${idx+1}`} className="w-full h-auto block" loading="lazy" />
+                            <SafeImage key={idx} src={img} alt={`Page ${idx+1}`} className="w-full h-auto block" loading="lazy" />
                         ))}
                         
                         <div className="py-20 text-center bg-black">

@@ -3,6 +3,7 @@ import { Inter, Playfair_Display, Poppins, Cinzel } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import Navbar from "@/components/layout/Navbar";
+import "@/components/wdyr";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-body" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-heading" });

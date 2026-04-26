@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import SafeImage from "@/components/ui/SafeImage";
 
 export const dynamic = "force-dynamic";
 
@@ -56,7 +57,7 @@ export default async function Home() {
                     {trending.map((comic: any) => (
                         <Link href={`/comic/${comic.id}`} key={comic.id} className="comic-card bg-card rounded-xl overflow-hidden cursor-pointer relative group flex-shrink-0 w-40 sm:w-48 md:w-56 snap-start">
                             <div className="relative aspect-[2/3] overflow-hidden">
-                                <img src={comic.coverImage} alt={comic.title} className="comic-cover w-full h-full object-cover transition duration-300" />
+                                <SafeImage src={comic.coverImage} alt={comic.title} className="comic-cover w-full h-full object-cover transition duration-300" />
                                 {comic.isExclusive && <div className="absolute top-2 left-2 bg-accent text-white text-xs font-bold px-2 py-1 rounded shadow"><i className="fa-solid fa-gem mr-1"></i>Exclusive</div>}
                                 <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-sm text-white text-xs font-bold px-2 py-1 rounded flex items-center">
                                     <i className="fa-solid fa-eye mr-1 text-[10px]"></i> {(comic.totalViews / 1000).toFixed(0)}K
@@ -84,7 +85,7 @@ export default async function Home() {
                             {exclusives.map((comic: any) => (
                                 <Link href={`/comic/${comic.id}`} key={comic.id} className="comic-card bg-card rounded-xl overflow-hidden cursor-pointer relative group flex-shrink-0 w-40 sm:w-48 md:w-56 snap-start">
                                     <div className="relative aspect-[2/3] overflow-hidden">
-                                        <img src={comic.coverImage} alt={comic.title} className="comic-cover w-full h-full object-cover transition duration-300" />
+                                        <SafeImage src={comic.coverImage} alt={comic.title} className="comic-cover w-full h-full object-cover transition duration-300" />
                                         <div className="absolute top-2 left-2 bg-accent text-white text-xs font-bold px-2 py-1 rounded shadow"><i className="fa-solid fa-gem mr-1"></i>Exclusive</div>
                                     </div>
                                     <div className="p-3">

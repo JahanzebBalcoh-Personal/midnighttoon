@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
+import SafeImage from "@/components/ui/SafeImage";
 import BookmarkButton from "@/components/comic/BookmarkButton";
 
 export const dynamic = "force-dynamic";
@@ -37,7 +38,7 @@ export default async function ComicDetail({ params }: { params: Promise<{ id: st
             
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 -mt-32 relative z-10 flex flex-col md:flex-row gap-8 pb-12">
                 <div className="w-48 md:w-64 flex-shrink-0 mx-auto md:mx-0">
-                    <img src={comic.coverImage} alt="Cover" className="w-full rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] border-2 border-white/10" />
+                    <SafeImage src={comic.coverImage} alt="Cover" className="w-full rounded-xl shadow-[0_10px_30px_rgba(0,0,0,0.8)] border-2 border-white/10" />
                     {comic.episodes.length > 0 && (
                         <Link href={`/read/${comic.id}/${comic.episodes[0].id}`} className="block w-full mt-4 bg-gradient-to-r from-secondary to-accent text-white font-ui font-bold py-3 rounded-xl shadow-[0_0_15px_rgba(255,77,141,0.4)] hover:opacity-90 transition text-center">
                             <i className="fa-solid fa-book-open mr-2"></i> Read First Ep
@@ -70,7 +71,7 @@ export default async function ComicDetail({ params }: { params: Promise<{ id: st
                             {comic.episodes.map((ep: any) => (
                                 <Link href={`/read/${comic.id}/${ep.id}`} key={ep.id} className="flex items-center gap-4 p-3 hover:bg-white/5 transition cursor-pointer border-b border-white/5">
                                     <div className="relative w-24 aspect-video bg-card rounded overflow-hidden flex-shrink-0">
-                                        <img src={comic.coverImage} className="w-full h-full object-cover opacity-50" />
+                                        <SafeImage src={comic.coverImage} className="w-full h-full object-cover opacity-50" />
                                         <div className="absolute inset-0 flex items-center justify-center font-heading font-bold text-xl text-white/50 bg-black/40">
                                             {ep.episodeNumber}
                                         </div>
