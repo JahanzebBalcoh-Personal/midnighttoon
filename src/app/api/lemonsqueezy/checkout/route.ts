@@ -22,7 +22,7 @@ export async function POST(request: Request) {
           attributes: {
             checkout_data: {
               custom: {
-                userId: session.user.id,
+                userId: (session.user as any).id,
                 coinsAmount: coinsAmount?.toString() || "0",
                 planId: planId || "",
                 type: type
