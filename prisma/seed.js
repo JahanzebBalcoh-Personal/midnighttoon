@@ -54,9 +54,9 @@ async function main() {
         data: {
             title: "Forbidden Professor",
             authorId: artist.id,
-            coverImage: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-            bannerImage: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80",
-            synopsis: "She was just supposed to be his teaching assistant. But late night grading sessions turn into a dangerous game of forbidden desire.",
+            coverImage: "/images/comics/forbidden_professor_cover.png",
+            bannerImage: "/images/comics/forbidden_professor_banner.png",
+            synopsis: "When a brilliant young professor meets a student who challenges everything he knows about discipline, a dangerous game of forbidden desire begins. How far will they go before the secrets consume them?",
             genres: ["Romance", "School Life", "Forbidden Love"],
             tags: ["professor", "forbidden", "university"],
             status: "Completed",
