@@ -32,10 +32,22 @@ export default function Navbar() {
                     </div>
 
                     <div className="hidden md:flex items-center space-x-6">
-                        <div className="relative">
-                            <input type="text" placeholder="Search..." className="bg-card/50 border border-white/10 rounded-full py-1.5 px-4 pl-10 text-sm focus:outline-none focus:border-accent text-white w-40 transition-all focus:w-56 backdrop-blur-sm" />
+                        <form 
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                const query = (e.currentTarget.elements.namedItem("search") as HTMLInputElement).value;
+                                if (query) window.location.href = `/browse?q=${encodeURIComponent(query)}`;
+                            }}
+                            className="relative"
+                        >
+                            <input 
+                                name="search"
+                                type="text" 
+                                placeholder="Search comics..." 
+                                className="bg-card/50 border border-white/10 rounded-full py-1.5 px-4 pl-10 text-sm focus:outline-none focus:border-accent text-white w-40 transition-all focus:w-56 backdrop-blur-sm" 
+                            />
                             <i className="fa-solid fa-search absolute left-4 top-2.5 text-text-secondary text-sm"></i>
-                        </div>
+                        </form>
                         
                         {session ? (
                             <div className="flex items-center gap-4">

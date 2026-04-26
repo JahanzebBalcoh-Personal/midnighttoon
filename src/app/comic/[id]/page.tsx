@@ -1,16 +1,30 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import BookmarkButton from "@/components/comic/BookmarkButton";
 
 export const dynamic = "force-dynamic";
 
 export default async function ComicDetail({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
+    const session = await getServerSession(authOptions);
+    
     const comic = await prisma.comic.findUnique({
         where: { id },
         include: { episodes: { orderBy: { episodeNumber: "asc" } } },
     });
 
     if (!comic) return <div className="text-center py-20 text-white text-xl">Comic not found</div>;
+
+    let isBookmarked = false;
+    if (session?.user?.email) {
+        const user = await prisma.user.findUnique({
+            where: { email: session.user.email },
+            include: { bookmarks: { where: { comicId: id } } }
+        });
+        isBookmarked = (user?.bookmarks?.length || 0) > 0;
+    }
 
     return (
         <div className="w-full min-h-screen">
@@ -29,9 +43,7 @@ export default async function ComicDetail({ params }: { params: Promise<{ id: st
                             <i className="fa-solid fa-book-open mr-2"></i> Read First Ep
                         </Link>
                     )}
-                    <button className="w-full mt-2 bg-card border border-white/20 text-white font-ui py-3 rounded-xl hover:bg-white/5 transition">
-                        <i className="fa-regular fa-bookmark mr-2"></i> Add to Library
-                    </button>
+                    <BookmarkButton comicId={id} isInitialBookmarked={isBookmarked} />
                 </div>
                 
                 <div className="flex-grow pt-4 md:pt-32">

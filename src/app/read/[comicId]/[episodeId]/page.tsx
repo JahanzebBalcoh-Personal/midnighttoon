@@ -1,11 +1,14 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect } from "next-auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
 export default async function Reader({ params }: { params: Promise<{ comicId: string, episodeId: string }> }) {
     const { comicId, episodeId } = await params;
+    const session = await getServerSession(authOptions);
 
     const episode = await prisma.episode.findUnique({
         where: { id: episodeId },
@@ -16,9 +19,31 @@ export default async function Reader({ params }: { params: Promise<{ comicId: st
         return <div className="text-center py-20 text-white">Episode not found</div>;
     }
 
-    // In a real app, we'd check if the user has unlocked this episode or has a subscription
-    // For now, let's just simulate the check for the "locked" UI
-    const isLocked = !episode.isFree; 
+    // Record Reading History if logged in
+    if (session?.user?.email) {
+        const user = await prisma.user.findUnique({ where: { email: session.user.email } });
+        if (user) {
+            await prisma.readingHistory.upsert({
+                where: { 
+                    id: `history-${user.id}-${comicId}` // Custom unique key to avoid duplicates per comic per user
+                },
+                update: {
+                    episodeId: episodeId,
+                    lastReadAt: new Date()
+                },
+                create: {
+                    id: `history-${user.id}-${comicId}`,
+                    userId: user.id,
+                    comicId: comicId,
+                    episodeId: episodeId
+                }
+            }).catch(e => console.error("History recording failed:", e));
+        }
+    }
+
+    // Determine if episode is locked
+    // Logic: Free episodes are always open. Paid episodes require unlock.
+    const isLocked = !episode.isFree;
 
     return (
         <div className="fixed inset-0 z-50 bg-black overflow-y-auto">
