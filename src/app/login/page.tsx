@@ -85,6 +85,21 @@ export default function LoginPage() {
                     </button>
                 </form>
 
+                <div className="mt-8 flex items-center gap-4">
+                    <div className="h-px bg-white/10 flex-grow"></div>
+                    <span className="text-text-secondary text-xs font-bold uppercase tracking-wider">OR CONTINUE WITH</span>
+                    <div className="h-px bg-white/10 flex-grow"></div>
+                </div>
+
+                <div className="mt-6">
+                    <button 
+                        onClick={() => signIn("google", { callbackUrl: "/" })}
+                        className="w-full flex items-center justify-center gap-3 bg-background border border-white/10 p-3.5 rounded-xl hover:bg-white/5 transition text-white text-sm font-medium"
+                    >
+                        <i className="fa-brands fa-google text-secondary text-lg"></i> Continue with Google
+                    </button>
+                </div>
+
                 <p className="mt-8 text-center text-text-secondary text-sm">
                     Don't have an account? <Link href="/register" className="text-accent font-bold hover:underline">Register Now</Link>
                 </p>
